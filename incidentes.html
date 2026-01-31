@@ -1,114 +1,223 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Registro de Incidentes</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Incidentes - app-soporte</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <header class="topbar">
+        <div class="logo">app-soporte</div>
+        <nav class="menu">
+            <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="incidentes.html" class="active"><i class="fas fa-exclamation-circle"></i> Incidentes</a>
+            <a href="historial.html"><i class="fas fa-history"></i> Historial</a>
+            <a href="tareas.html"><i class="fas fa-tasks"></i> Tareas</a>
+            <a href="sugerencias.html"><i class="fas fa-robot"></i> Sugerencias IA</a>
+        </nav>
+        <div class="actions-top">
+            <button class="btn-outline" onclick="showLogin()">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <button class="btn-primary" onclick="showSignup()">
+                <i class="fas fa-user-plus"></i> Sign up
+            </button>
+        </div>
+    </header>
 
-<header class="topbar">
-  <div class="logo">app-soporte</div>
+    <main class="container">
+        <div class="hero">
+            <h1><i class="fas fa-exclamation-circle"></i> Registro de Incidente</h1>
+            <p>Completa el formulario para reportar un nuevo incidente técnico</p>
+        </div>
 
-  <nav class="menu">
-    <a href="dashboard.html">Dashboard</a>
-    <a href="incidentes.html">Incidentes</a>
-    <a href="historial.html">Historial</a>
-    <a href="tareas.html">Tareas</a>
-    <a href="sugerencias.html">Sugerencias</a>
-  </nav>
+        <section class="incident-card">
+            <h2><i class="fas fa-edit"></i> Formulario de Registro</h2>
+            <p class="subtitle">Todos los campos marcados con <span style="color: var(--danger-color);">*</span> son obligatorios</p>
+            
+            <form id="incidentForm" onsubmit="guardarIncidente(); return false;">
+                <table class="incident-table">
+                    <tbody>
+                        <tr>
+                            <th><span style="color: var(--danger-color);">*</span> Nombre completo</th>
+                            <td><input id="nombre" required placeholder="Ej: Juan Pérez"></td>
+                            <th><span style="color: var(--danger-color);">*</span> Documento</th>
+                            <td><input id="documento" required placeholder="Ej: 12345678"></td>
+                        </tr>
 
-  <div class="actions-top">
-    <button class="btn-outline">Login</button>
-    <button class="btn-primary">Sign up</button>
-  </div>
-</header>
+                        <tr>
+                            <th><span style="color: var(--danger-color);">*</span> Contacto</th>
+                            <td><input id="contacto" required placeholder="Teléfono o celular"></td>
+                            <th><span style="color: var(--danger-color);">*</span> Correo corporativo</th>
+                            <td><input type="email" id="correo" required placeholder="usuario@empresa.com"></td>
+                        </tr>
 
+                        <tr>
+                            <th><span style="color: var(--danger-color);">*</span> Área del usuario</th>
+                            <td>
+                                <select id="area" required>
+                                    <option value="">Seleccionar área</option>
+                                    <option>IT / Sistemas</option>
+                                    <option>Soporte Técnico</option>
+                                    <option>Desarrollo</option>
+                                    <option>Administración</option>
+                                    <option>Recursos Humanos</option>
+                                    <option>Ventas</option>
+                                    <option>Marketing</option>
+                                    <option>Otro</option>
+                                </select>
+                            </td>
+                            <th>Fecha del incidente</th>
+                            <td><input type="date" id="fechaIncidente"></td>
+                        </tr>
 
-<main class="container">
+                        <tr>
+                            <th>Fecha de apertura</th>
+                            <td><input type="date" id="fechaApertura"></td>
+                            <th>Fecha de cierre</th>
+                            <td><input type="date" id="fechaCierre"></td>
+                        </tr>
 
-<section class="incident-card">
-  <h2>Registro de Incidente</h2>
+                        <tr>
+                            <th>Tipo de incidente</th>
+                            <td>
+                                <select id="tipo">
+                                    <option value="">Seleccionar tipo</option>
+                                    <option>Hardware</option>
+                                    <option>Software</option>
+                                    <option>Red / Conexión</option>
+                                    <option>Seguridad</option>
+                                    <option>Correo Electrónico</option>
+                                    <option>Base de Datos</option>
+                                    <option>Otro</option>
+                                </select>
+                            </td>
+                            <th><span style="color: var(--danger-color);">*</span> Prioridad</th>
+                            <td>
+                                <select id="prioridad" required>
+                                    <option value="">Seleccionar prioridad</option>
+                                    <option>Normal</option>
+                                    <option>Importante</option>
+                                    <option>Urgente</option>
+                                </select>
+                            </td>
+                        </tr>
 
-  <table class="incident-table">
-    <tbody>
-      <tr>
-        <th>Nombre completo</th>
-        <td><input id="nombre"></td>
-        <th>Documento</th>
-        <td><input id="documento"></td>
-      </tr>
+                        <tr>
+                            <th>Estado</th>
+                            <td>
+                                <select id="estado">
+                                    <option>Abierto</option>
+                                    <option>En proceso</option>
+                                    <option>Cerrado</option>
+                                </select>
+                            </td>
+                            <th>Técnico asignado</th>
+                            <td>
+                                <select id="tecnico">
+                                    <option value="">Sin asignar</option>
+                                    <option>Carlos Rodríguez</option>
+                                    <option>Ana Martínez</option>
+                                    <option>Luis García</option>
+                                    <option>María López</option>
+                                </select>
+                            </td>
+                        </tr>
 
-      <tr>
-        <th>Contacto</th>
-        <td><input id="contacto"></td>
-        <th>Correo corporativo</th>
-        <td><input type="email" id="correo"></td>
-      </tr>
+                        <tr>
+                            <th colspan="4"><span style="color: var(--danger-color);">*</span> Descripción del incidente</th>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <textarea id="descripcion" required placeholder="Describe el incidente con el mayor detalle posible. Incluye pasos para reproducirlo, mensajes de error y cualquier información relevante."></textarea>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <th>Archivos adjuntos</th>
+                            <td colspan="3">
+                                <input type="file" id="archivos" multiple accept=".jpg,.png,.pdf,.doc,.docx">
+                                <p class="help-text">Puedes adjuntar imágenes, documentos o capturas de pantalla (máx. 5 archivos)</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-      <tr>
-        <th>Área del usuario</th>
-        <td><input id="area"></td>
-        <th>Fecha del incidente</th>
-        <td><input type="date" id="fechaIncidente"></td>
-      </tr>
+                <div class="actions">
+                    <button type="submit" class="btn-3d">
+                        <i class="fas fa-save"></i> Registrar Incidente
+                    </button>
+                    <button type="button" class="btn-3d secondary" onclick="history.back()">
+                        <i class="fas fa-arrow-left"></i> Volver
+                    </button>
+                    <button type="reset" class="btn-3d outline">
+                        <i class="fas fa-undo"></i> Limpiar Formulario
+                    </button>
+                </div>
+            </form>
+        </section>
 
-      <tr>
-        <th>Fecha de apertura</th>
-        <td><input type="date" id="fechaApertura"></td>
-        <th>Fecha de cierre</th>
-        <td><input type="date" id="fechaCierre"></td>
-      </tr>
+        <div class="info-grid">
+            <div class="info-card">
+                <h3><i class="fas fa-question-circle"></i> ¿Cómo reportar correctamente?</h3>
+                <ul>
+                    <li>Proporciona información detallada y precisa</li>
+                    <li>Incluye pasos para reproducir el problema</li>
+                    <li>Adjunta capturas de pantalla si es posible</li>
+                    <li>Selecciona la prioridad correcta</li>
+                    <li>Verifica tu información de contacto</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-clock"></i> Tiempos de Respuesta</h3>
+                <ul>
+                    <li><strong>Urgente:</strong> 1-2 horas</li>
+                    <li><strong>Importante:</strong> 4-8 horas</li>
+                    <li><strong>Normal:</strong> 24-48 horas</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-video"></i> Video Tutorial</h3>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/VIDEO_ID_INCIDENTES" 
+                            title="Cómo reportar incidentes correctamente"
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </main>
 
-      <tr>
-        <th>Tipo</th>
-        <td><input id="tipo"></td>
-        <th>Prioridad</th>
-        <td>
-          <select id="prioridad">
-            <option>Normal</option>
-            <option>Importante</option>
-            <option>Urgente</option>
-          </select>
-        </td>
-      </tr>
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p>© 2026 app-soporte - Sistema de Gestión de Incidentes Técnicos</p>
+    </footer>
 
-      <tr>
-        <th>Estado</th>
-        <td>
-          <select id="estado">
-            <option>Abierto</option>
-            <option>En proceso</option>
-            <option>Cerrado</option>
-          </select>
-        </td>
-        <th>Técnico asignado</th>
-        <td><input id="tecnico"></td>
-      </tr>
-
-      <tr>
-        <th colspan="4">Descripción del incidente</th>
-      </tr>
-      <tr>
-        <td colspan="4">
-          <textarea id="descripcion"></textarea>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="actions">
-    <button class="btn-3d" onclick="guardarIncidente()">Registrar</button>
-    <button class="btn-3d secondary" onclick="history.back()">Volver</button>
-  </div>
-</section>
-
-</main>
-
-<footer class="footer">
-  App Soporte Técnico © 2026
-</footer>
-
-<script src="js/incidentes.js"></script>
+    <script src="js/incidentes.js"></script>
+    <script>
+        function showLogin() {
+            alert('Función de login en desarrollo');
+        }
+        
+        function showSignup() {
+            alert('Función de registro en desarrollo');
+        }
+        
+        // Establecer fecha actual por defecto
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('fechaIncidente').value = today;
+            document.getElementById('fechaApertura').value = today;
+        });
+    </script>
 </body>
 </html>

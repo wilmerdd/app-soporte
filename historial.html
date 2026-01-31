@@ -1,59 +1,298 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Historial de Incidentes</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Incidentes - app-soporte</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <header class="topbar">
+        <div class="logo">app-soporte</div>
+        <nav class="menu">
+            <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="incidentes.html"><i class="fas fa-exclamation-circle"></i> Incidentes</a>
+            <a href="historial.html" class="active"><i class="fas fa-history"></i> Historial</a>
+            <a href="tareas.html"><i class="fas fa-tasks"></i> Tareas</a>
+            <a href="sugerencias.html"><i class="fas fa-robot"></i> Sugerencias IA</a>
+        </nav>
+        <div class="actions-top">
+            <button class="btn-outline" onclick="showLogin()">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <button class="btn-primary" onclick="showSignup()">
+                <i class="fas fa-user-plus"></i> Sign up
+            </button>
+        </div>
+    </header>
 
-<header class="topbar">
-  <div class="logo">app-soporte</div>
+    <main class="container">
+        <div class="hero">
+            <h1><i class="fas fa-history"></i> Historial de Incidentes</h1>
+            <p>Consulta y gestiona todos los incidentes reportados en el sistema</p>
+            <div class="search-box">
+                <input type="text" id="searchHistorial" placeholder="🔍 Buscar por ID, usuario, área...">
+            </div>
+            <div class="chips">
+                <span class="chip active filter-btn" data-filter="all">Todos</span>
+                <span class="chip filter-btn" data-filter="Abierto">Abiertos</span>
+                <span class="chip filter-btn" data-filter="En proceso">En Proceso</span>
+                <span class="chip filter-btn" data-filter="Cerrado">Cerrados</span>
+                <span class="chip filter-btn" data-filter="Urgente">Urgentes</span>
+            </div>
+        </div>
 
-  <nav class="menu">
-    <a href="dashboard.html">Dashboard</a>
-    <a href="incidentes.html">Incidentes</a>
-    <a href="historial.html">Historial</a>
-    <a href="tareas.html">Tareas</a>
-    <a href="sugerencias.html">Sugerencias</a>
-  </nav>
+        <section class="incident-card">
+            <div class="table-header">
+                <h2><i class="fas fa-table"></i> Incidentes Registrados</h2>
+                <div class="table-actions">
+                    <button class="btn btn-outline" onclick="exportToCSV()">
+                        <i class="fas fa-file-export"></i> Exportar CSV
+                    </button>
+                    <button class="btn btn-outline" onclick="printTable()">
+                        <i class="fas fa-print"></i> Imprimir
+                    </button>
+                    <button class="btn btn-primary" onclick="refreshTable()">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+            </div>
 
-  <div class="actions-top">
-    <button class="btn-outline">Login</button>
-    <button class="btn-primary">Sign up</button>
-  </div>
-</header>
+            <div class="table-responsive">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>ID <i class="fas fa-sort"></i></th>
+                            <th>Usuario <i class="fas fa-sort"></i></th>
+                            <th>Área <i class="fas fa-sort"></i></th>
+                            <th>Prioridad <i class="fas fa-sort"></i></th>
+                            <th>Estado <i class="fas fa-sort"></i></th>
+                            <th>Apertura <i class="fas fa-sort"></i></th>
+                            <th>Cierre <i class="fas fa-sort"></i></th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaHistorial">
+                        <tr>
+                            <td colspan="8" style="text-align: center; padding: 3rem;">
+                                <div class="loader"></div>
+                                <p>Cargando incidentes...</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
+            <div class="table-footer">
+                <div class="table-info">
+                    Mostrando <span id="showingCount">0</span> de <span id="totalCount">0</span> incidentes
+                </div>
+                <div class="pagination">
+                    <button class="btn btn-outline" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span class="page-number">1</span>
+                    <button class="btn btn-outline">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
 
-<main class="container">
+            <div class="actions">
+                <button class="btn-3d secondary" onclick="history.back()">
+                    <i class="fas fa-arrow-left"></i> Volver al Dashboard
+                </button>
+                <button class="btn-3d" onclick="window.location.href='incidentes.html'">
+                    <i class="fas fa-plus"></i> Nuevo Incidente
+                </button>
+            </div>
+        </section>
 
-<section class="incident-card">
-  <h2>Incidentes Registrados</h2>
+        <div class="info-grid">
+            <div class="card">
+                <h2><i class="fas fa-chart-bar"></i> Estadísticas del Historial</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalIncidents">0</div>
+                        <div class="stat-label">Total Incidentes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="avgResolutionTime">0</div>
+                        <div class="stat-label">Tiempo Promedio Resolución</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="closureRate">0%</div>
+                        <div class="stat-label">Tasa de Cierre</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="satisfactionScore">0</div>
+                        <div class="stat-label">Puntuación Satisfacción</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2><i class="fas fa-video"></i> Análisis de Datos</h2>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/VIDEO_ID_HISTORIAL" 
+                            title="Análisis de Datos de Incidentes"
+                            allowfullscreen>
+                    </iframe>
+                </div>
+                <p>Aprende a interpretar las métricas y mejorar tu sistema de soporte.</p>
+            </div>
+        </div>
 
-  <table class="history-table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Usuario</th>
-        <th>Área</th>
-        <th>Prioridad</th>
-        <th>Estado</th>
-        <th>Apertura</th>
-        <th>Cierre</th>
-      </tr>
-    </thead>
-    <tbody id="tablaHistorial"></tbody>
-  </table>
+        <div class="card">
+            <h2><i class="fas fa-lightbulb"></i> Recomendaciones Basadas en Historial</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-clock"></i> Patrones Temporales</h3>
+                    <p>La mayoría de incidentes ocurren los lunes en la mañana. Considera aumentar personal esos días.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-laptop"></i> Hardware Problemático</h3>
+                    <p>Los discos duros son el componente que más falla. Considera un programa de reemplazo preventivo.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-users"></i> Áreas Críticas</h3>
+                    <p>El área de Desarrollo reporta 35% más incidentes. Podría necesitar más recursos de soporte.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-chart-line"></i> Tendencia Mejora</h3>
+                    <p>El tiempo de resolución ha mejorado un 15% este trimestre. ¡Buen trabajo!</p>
+                </div>
+            </div>
+        </div>
+    </main>
 
-  <button class="btn-3d secondary" onclick="history.back()">Volver</button>
-</section>
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p>© 2026 app-soporte - Sistema de Gestión de Incidentes Técnicos</p>
+    </footer>
 
-</main>
-
-<footer class="footer">
-  App Soporte Técnico © 2026
-</footer>
-
-<script src="js/historial.js"></script>
+    <script src="js/historial.js"></script>
+    <script>
+        function showLogin() {
+            alert('Función de login en desarrollo');
+        }
+        
+        function showSignup() {
+            alert('Función de registro en desarrollo');
+        }
+        
+        function exportToCSV() {
+            alert('Función de exportación a CSV en desarrollo');
+        }
+        
+        function printTable() {
+            window.print();
+        }
+        
+        function refreshTable() {
+            location.reload();
+        }
+        
+        // Agregar estilos adicionales
+        const style = document.createElement('style');
+        style.textContent = `
+            .table-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1.5rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .table-actions {
+                display: flex;
+                gap: 0.5rem;
+            }
+            
+            .table-responsive {
+                overflow-x: auto;
+                margin: 1rem 0;
+            }
+            
+            .table-footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 1.5rem;
+                padding-top: 1rem;
+                border-top: 1px solid #eee;
+            }
+            
+            .pagination {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            
+            .page-number {
+                padding: 0.5rem 1rem;
+                background: #f8f9fa;
+                border-radius: 4px;
+            }
+            
+            .stats-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+            
+            .stat-card {
+                text-align: center;
+                padding: 1rem;
+                background: #f8f9fa;
+                border-radius: 8px;
+            }
+            
+            .badge {
+                padding: 0.25rem 0.5rem;
+                border-radius: 4px;
+                font-size: 0.85rem;
+                font-weight: 600;
+            }
+            
+            .badge.priority-urgente {
+                background: rgba(255, 51, 51, 0.1);
+                color: var(--danger-color);
+            }
+            
+            .badge.priority-importante {
+                background: rgba(255, 204, 0, 0.1);
+                color: var(--warning-color);
+            }
+            
+            .badge.priority-normal {
+                background: rgba(75, 181, 67, 0.1);
+                color: var(--success-color);
+            }
+            
+            .badge.estado-abierto {
+                background: rgba(67, 97, 238, 0.1);
+                color: var(--primary-color);
+            }
+            
+            .badge.estado-enproceso {
+                background: rgba(76, 201, 240, 0.1);
+                color: var(--accent-color);
+            }
+            
+            .badge.estado-cerrado {
+                background: rgba(108, 117, 125, 0.1);
+                color: var(--gray-color);
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>

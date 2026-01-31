@@ -1,35 +1,192 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - app-soporte</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+    <header class="topbar">
+        <div class="logo">app-soporte</div>
+        <nav class="menu">
+            <a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="incidentes.html"><i class="fas fa-exclamation-circle"></i> Incidentes</a>
+            <a href="historial.html"><i class="fas fa-history"></i> Historial</a>
+            <a href="tareas.html"><i class="fas fa-tasks"></i> Tareas</a>
+            <a href="sugerencias.html"><i class="fas fa-robot"></i> Sugerencias IA</a>
+        </nav>
+        <div class="actions-top">
+            <button class="btn-outline" onclick="showLogin()">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <button class="btn-primary pulse" onclick="showSignup()">
+                <i class="fas fa-user-plus"></i> Sign up
+            </button>
+        </div>
+    </header>
 
-<header class="topbar">
-  <div class="logo">app-soporte</div>
+    <section class="container">
+        <div class="hero">
+            <h1>Panel de Control de Soporte Técnico</h1>
+            <p>Gestiona y monitoriza todos los incidentes en tiempo real con estadísticas avanzadas</p>
+            <div class="search-box">
+                <input type="text" placeholder="🔍 Buscar incidentes, usuarios, áreas...">
+            </div>
+            <div class="chips">
+                <span class="chip active" onclick="filterDashboard('all')">Todos</span>
+                <span class="chip" onclick="filterDashboard('urgent')">Urgentes</span>
+                <span class="chip" onclick="filterDashboard('active')">Activos</span>
+                <span class="chip" onclick="filterDashboard('resolved')">Resueltos</span>
+            </div>
+        </div>
 
-  <nav class="menu">
-    <a href="dashboard.html">Dashboard</a>
-    <a href="incidentes.html">Incidentes</a>
-    <a href="historial.html">Historial</a>
-    <a href="tareas.html">Tareas</a>
-    <a href="sugerencias.html">Sugerencias</a>
-  </nav>
+        <div class="dashboard-grid">
+            <div class="dashboard-card slide-in-left">
+                <h3><i class="fas fa-chart-line"></i> Estadísticas Totales</h3>
+                <div class="stat-number" id="total">0</div>
+                <p>Incidentes registrados</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 75%"></div>
+                </div>
+                <div class="stats-sub">
+                    <span><i class="fas fa-check-circle" style="color: var(--success-color);"></i> 119 resueltos</span>
+                    <span><i class="fas fa-clock" style="color: var(--warning-color);"></i> 23 activos</span>
+                </div>
+            </div>
+            
+            <div class="dashboard-card slide-in-left">
+                <h3><i class="fas fa-exclamation-triangle"></i> Incidentes Urgentes</h3>
+                <div class="stat-number" id="urg">0</div>
+                <p>Requieren atención inmediata</p>
+                <button class="btn-primary" onclick="location.href='incidentes.html'">
+                    <i class="fas fa-plus"></i> Nuevo Incidente
+                </button>
+            </div>
+            
+            <div class="dashboard-card slide-in-left">
+                <h3><i class="fas fa-user-check"></i> Técnicos Disponibles</h3>
+                <div class="stat-number">5/8</div>
+                <p>Técnicos activos en este momento</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 62.5%"></div>
+                </div>
+                <div class="stats-sub">
+                    <span><i class="fas fa-user" style="color: var(--primary-color);"></i> 3 disponibles</span>
+                    <span><i class="fas fa-user-clock" style="color: var(--gray-color);"></i> 2 ocupados</span>
+                </div>
+            </div>
+            
+            <div class="dashboard-card slide-in-left">
+                <h3><i class="fas fa-clock"></i> Tiempo Promedio</h3>
+                <div class="stat-number">2h 15m</div>
+                <p>Respuesta a incidentes</p>
+                <div class="trend up">
+                    <i class="fas fa-arrow-up"></i> 15% mejor que el mes pasado
+                </div>
+            </div>
+        </div>
 
-  <div class="actions-top">
-    <button class="btn-outline">Login</button>
-    <button class="btn-primary">Sign up</button>
-  </div>
-</header>
+        <div class="info-grid">
+            <div class="card">
+                <h2><i class="fas fa-history"></i> Incidentes Recientes</h2>
+                <div id="recent-incidents">
+                    <div class="loader"></div>
+                </div>
+                <button class="btn btn-outline" onclick="location.href='historial.html'">
+                    <i class="fas fa-list"></i> Ver Historial Completo
+                </button>
+            </div>
+            
+            <div class="card">
+                <h2><i class="fas fa-chart-pie"></i> Distribución por Área</h2>
+                <div class="chart-container">
+                    <canvas id="chartAreas"></canvas>
+                </div>
+            </div>
+        </div>
 
+        <div class="info-grid">
+            <div class="card">
+                <h2><i class="fas fa-chart-bar"></i> Tendencias Mensuales</h2>
+                <div class="chart-container">
+                    <canvas id="chartTrends"></canvas>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2><i class="fas fa-video"></i> Tutorial del Sistema</h2>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/VIDEO_ID_DASHBOARD" 
+                            title="Tutorial del Sistema de Soporte"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+                <p>Aprende a usar todas las funciones del sistema de soporte técnico.</p>
+            </div>
+        </div>
 
-<section class="container">
-<button class="btn" onclick="history.back()">⬅ Volver</button>
-<div class="card">Total: <span id="total"></span></div>
-<div class="card">Urgentes: <span id="urg"></span></div>
-</section>
+        <div class="card">
+            <h2><i class="fas fa-lightbulb"></i> Consejos Rápidos</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-bolt"></i> Respuesta Rápida</h3>
+                    <p>Los incidentes respondidos en menos de 1 hora tienen 80% más satisfacción.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-users"></i> Comunicación</h3>
+                    <p>Mantén a los usuarios informados sobre el progreso de sus incidentes.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-database"></i> Documentación</h3>
+                    <p>Documenta soluciones comunes para reducir tiempos de respuesta futuros.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-chart-line"></i> Análisis</h3>
+                    <p>Revisa métricas semanales para identificar áreas de mejora.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<footer>© 2026</footer>
-<script src="js/dashboard.js"></script>
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p>© 2026 app-soporte - Sistema de Gestión de Incidentes Técnicos</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+            <a href="#" style="color: var(--accent-color); margin: 0 10px;">Privacidad</a> |
+            <a href="#" style="color: var(--accent-color); margin: 0 10px;">Términos</a> |
+            <a href="#" style="color: var(--accent-color); margin: 0 10px;">Contacto</a> |
+            <a href="#" style="color: var(--accent-color); margin: 0 10px;">Soporte</a>
+        </p>
+    </footer>
+
+    <script src="js/dashboard.js"></script>
+    <script>
+        // Funciones globales
+        function showLogin() {
+            alert('Función de login en desarrollo');
+        }
+        
+        function showSignup() {
+            alert('Función de registro en desarrollo');
+        }
+        
+        function filterDashboard(filter) {
+            // Actualizar chips activos
+            document.querySelectorAll('.chip').forEach(chip => chip.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Aquí implementarías el filtrado real
+            console.log('Filtrando por:', filter);
+        }
+    </script>
 </body>
 </html>

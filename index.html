@@ -1,49 +1,385 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>TaskSupport</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>app-soporte - Sistema de Gestión de Incidentes</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <header class="topbar">
+        <div class="logo">app-soporte</div>
+        <nav class="menu">
+            <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="incidentes.html"><i class="fas fa-exclamation-circle"></i> Incidentes</a>
+            <a href="historial.html"><i class="fas fa-history"></i> Historial</a>
+            <a href="tareas.html"><i class="fas fa-tasks"></i> Tareas</a>
+            <a href="sugerencias.html"><i class="fas fa-robot"></i> Sugerencias IA</a>
+        </nav>
+        <div class="actions-top">
+            <button class="btn-outline" onclick="showLogin()">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <button class="btn-primary pulse" onclick="showSignup()">
+                <i class="fas fa-user-plus"></i> Registrarse
+            </button>
+        </div>
+    </header>
 
-<header class="topbar">
-  <div class="logo">app-soporte</div>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Gestiona tus incidentes de soporte técnico</h1>
+            <p>
+                Sistema completo para registrar, controlar y realizar seguimiento a los incidentes técnicos
+                reportados por los usuarios de la organización. Eficiencia y control en un solo lugar.
+            </p>
+            
+            <div class="cta-buttons">
+                <button class="btn-3d" onclick="window.location.href='dashboard.html'">
+                    <i class="fas fa-rocket"></i> Comenzar Ahora
+                </button>
+                <button class="btn-3d secondary" onclick="watchDemo()">
+                    <i class="fas fa-play-circle"></i> Ver Demo
+                </button>
+            </div>
+            
+            <div class="search-box">
+                <input type="text" placeholder="🔍 Buscar incidente, usuario, área, solución..." />
+                <button class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Rápido</h3>
+                    <p>Registro en menos de 2 minutos</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Seguro</h3>
+                    <p>Datos protegidos y respaldados</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Inteligente</h3>
+                    <p>Análisis y reportes automáticos</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Responsivo</h3>
+                    <p>Funciona en cualquier dispositivo</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <nav class="menu">
-    <a href="dashboard.html">Dashboard</a>
-    <a href="incidentes.html">Incidentes</a>
-    <a href="historial.html">Historial</a>
-    <a href="tareas.html">Tareas</a>
-    <a href="sugerencias.html">Sugerencias</a>
-  </nav>
+    <section class="container">
+        <div class="info-grid">
+            <div class="info-card">
+                <h3><i class="fas fa-exclamation-circle"></i> Registro de Incidentes</h3>
+                <p>Registra incidentes de forma rápida y organizada con todos los detalles necesarios.</p>
+                <button class="btn btn-outline" onclick="window.location.href='incidentes.html'">
+                    Probar ahora
+                </button>
+            </div>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-history"></i> Historial Completo</h3>
+                <p>Accede al historial completo de incidentes con filtros avanzados y búsqueda inteligente.</p>
+                <button class="btn btn-outline" onclick="window.location.href='historial.html'">
+                    Ver ejemplos
+                </button>
+            </div>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-robot"></i> Asistente IA</h3>
+                <p>Obtén sugerencias inteligentes y automatiza tareas con nuestro asistente de IA.</p>
+                <button class="btn btn-outline" onclick="window.location.href='sugerencias.html'">
+                    Probar IA
+                </button>
+            </div>
+        </div>
 
-  <div class="actions-top">
-    <button class="btn-outline">Login</button>
-    <button class="btn-primary">Sign up</button>
-  </div>
-</header>
+        <div class="card">
+            <h2><i class="fas fa-play-circle"></i> Video Demostrativo</h2>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/VIDEO_ID_DEMO" 
+                        title="Demostración del Sistema app-soporte"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+            <p>Aprende en 5 minutos cómo usar todas las funciones del sistema de soporte técnico.</p>
+        </div>
 
-<section class="hero">
-  <h1>Gestiona tus incidentes de soporte</h1>
-  <p>
-    Registra, controla y realiza seguimiento a los incidentes técnicos
-    reportados por los usuarios de la organización.
-  </p>
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h3><i class="fas fa-chart-bar"></i> Estadísticas en Tiempo Real</h3>
+                <div class="stats-preview">
+                    <div class="stat">
+                        <div class="stat-number">1,250+</div>
+                        <div class="stat-label">Incidentes Resueltos</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Satisfacción Usuarios</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">45%</div>
+                        <div class="stat-label">Menor Tiempo Respuesta</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3><i class="fas fa-users"></i> Testimonios</h3>
+                <div class="testimonial">
+                    <p>"Este sistema ha transformado nuestra gestión de soporte. ¡Altamente recomendado!"</p>
+                    <div class="author">
+                        <strong>Carlos Rodríguez</strong>
+                        <span>Gerente de IT</span>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p>"La interfaz es intuitiva y las herramientas de análisis son excepcionales."</p>
+                    <div class="author">
+                        <strong>Ana Martínez</strong>
+                        <span>Líder de Soporte</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <div class="search-box">
-    <input type="text" placeholder="Buscar incidente, usuario, área..." />
-  </div>
+        <div class="card">
+            <h2><i class="fas fa-download"></i> Comienza en 3 Pasos</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Regístrate</h3>
+                    <p>Crea tu cuenta gratuita en menos de 1 minuto</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Configura</h3>
+                    <p>Personaliza tu espacio de trabajo y equipos</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Comienza a usar</h3>
+                    <p>Registra tu primer incidente y descubre el poder del sistema</p>
+                </div>
+            </div>
+            <div class="actions" style="justify-content: center; margin-top: 2rem;">
+                <button class="btn-3d" onclick="window.location.href='dashboard.html'">
+                    <i class="fas fa-play"></i> Comienza Gratis
+                </button>
+            </div>
+        </div>
+    </section>
 
-  <div class="chips">
-    <span class="chip active">Registrar</span>
-    <span class="chip">Abiertos</span>
-    <span class="chip">En proceso</span>
-    <span class="chip">Cerrados</span>
-  </div>
-</section>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>app-soporte</h4>
+                <p>Sistema de gestión de incidentes técnicos para organizaciones modernas.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="incidentes.html">Incidentes</a></li>
+                    <li><a href="historial.html">Historial</a></li>
+                    <li><a href="tareas.html">Tareas</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> soporte@app-soporte.com</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Ciudad, País</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Síguenos</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 app-soporte - Sistema de Gestión de Incidentes Técnicos. Todos los derechos reservados.</p>
+            <p>
+                <a href="#">Privacidad</a> | 
+                <a href="#">Términos</a> | 
+                <a href="#">Cookies</a> | 
+                <a href="#">Soporte</a>
+            </p>
+        </div>
+    </footer>
 
-<footer>© 2026 TaskSupport</footer>
-
+    <script>
+        function showLogin() {
+            alert('Función de login en desarrollo - Redirigiendo al dashboard...');
+            window.location.href = 'dashboard.html';
+        }
+        
+        function showSignup() {
+            alert('Función de registro en desarrollo - Redirigiendo al dashboard...');
+            window.location.href = 'dashboard.html';
+        }
+        
+        function watchDemo() {
+            document.querySelector('.video-container').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Agregar estilos adicionales para la página de inicio
+        const style = document.createElement('style');
+        style.textContent = `
+            .hero-content {
+                max-width: 800px;
+                margin: 0 auto;
+                text-align: center;
+            }
+            
+            .cta-buttons {
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                margin: 2rem 0;
+                flex-wrap: wrap;
+            }
+            
+            .features {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 2rem;
+                margin-top: 3rem;
+            }
+            
+            .feature {
+                text-align: center;
+                padding: 1rem;
+            }
+            
+            .feature i {
+                font-size: 2.5rem;
+                color: var(--accent-color);
+                margin-bottom: 1rem;
+            }
+            
+            .stats-preview {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .testimonial {
+                background: #f8f9fa;
+                padding: 1rem;
+                border-radius: 8px;
+                margin-bottom: 1rem;
+                border-left: 4px solid var(--primary-color);
+            }
+            
+            .author {
+                margin-top: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .author span {
+                display: block;
+                color: var(--gray-color);
+            }
+            
+            .steps {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+            
+            .step {
+                text-align: center;
+                padding: 1.5rem;
+                background: #f8f9fa;
+                border-radius: var(--border-radius);
+            }
+            
+            .step-number {
+                width: 50px;
+                height: 50px;
+                background: var(--primary-color);
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                font-weight: bold;
+                margin: 0 auto 1rem;
+            }
+            
+            .footer-content {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 2rem;
+                text-align: left;
+                margin-bottom: 2rem;
+            }
+            
+            .footer-section h4 {
+                margin-bottom: 1rem;
+                color: white;
+            }
+            
+            .footer-section ul {
+                list-style: none;
+                padding: 0;
+            }
+            
+            .footer-section ul li {
+                margin-bottom: 0.5rem;
+                color: #ccc;
+            }
+            
+            .footer-section a {
+                color: #ccc;
+                text-decoration: none;
+            }
+            
+            .footer-section a:hover {
+                color: var(--accent-color);
+            }
+            
+            .footer-bottom {
+                border-top: 1px solid rgba(255,255,255,0.1);
+                padding-top: 1rem;
+                margin-top: 2rem;
+            }
+            
+            @media (max-width: 768px) {
+                .features {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                
+                .stats-preview {
+                    grid-template-columns: 1fr;
+                }
+                
+                .steps {
+                    grid-template-columns: 1fr;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>

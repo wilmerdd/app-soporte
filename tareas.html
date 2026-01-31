@@ -1,43 +1,289 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Tareas</title>
-<link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Tareas - app-soporte</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <header class="topbar">
+        <div class="logo">app-soporte</div>
+        <nav class="menu">
+            <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="incidentes.html"><i class="fas fa-exclamation-circle"></i> Incidentes</a>
+            <a href="historial.html"><i class="fas fa-history"></i> Historial</a>
+            <a href="tareas.html" class="active"><i class="fas fa-tasks"></i> Tareas</a>
+            <a href="sugerencias.html"><i class="fas fa-robot"></i> Sugerencias IA</a>
+        </nav>
+        <div class="actions-top">
+            <button class="btn-outline" onclick="showLogin()">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <button class="btn-primary" onclick="showSignup()">
+                <i class="fas fa-user-plus"></i> Sign up
+            </button>
+        </div>
+    </header>
 
-<header class="topbar">
-  <div class="logo">app-soporte</div>
+    <section class="container">
+        <div class="hero">
+            <h1><i class="fas fa-tasks"></i> Gestión de Tareas</h1>
+            <p>Organiza y prioriza tus tareas diarias de soporte técnico</p>
+        </div>
 
-  <nav class="menu">
-    <a href="dashboard.html">Dashboard</a>
-    <a href="incidentes.html">Incidentes</a>
-    <a href="historial.html">Historial</a>
-    <a href="tareas.html">Tareas</a>
-    <a href="sugerencias.html">Sugerencias</a>
-  </nav>
+        <div class="card">
+            <h2><i class="fas fa-plus-circle"></i> Agregar Nueva Tarea</h2>
+            <div class="task-form">
+                <div class="form-row">
+                    <input type="text" id="tarea" placeholder="📝 Describe tu tarea..." class="task-input">
+                    <select id="nivel" class="priority-select">
+                        <option value="Normal">Normal</option>
+                        <option value="Importante">Importante</option>
+                        <option value="Urgente">Urgente</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="agregar()">
+                        <i class="fas fa-plus"></i> Agregar
+                    </button>
+                </div>
+                <p class="help-text">Presiona Enter para agregar rápidamente</p>
+            </div>
+        </div>
 
-  <div class="actions-top">
-    <button class="btn-outline">Login</button>
-    <button class="btn-primary">Sign up</button>
-  </div>
-</header>
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <h3><i class="fas fa-chart-pie"></i> Estadísticas de Tareas</h3>
+                <div id="taskStats">
+                    <div class="loader"></div>
+                </div>
+                <div class="task-actions">
+                    <button class="btn btn-outline" onclick="clearCompleted()">
+                        <i class="fas fa-trash"></i> Limpiar Completadas
+                    </button>
+                </div>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3><i class="fas fa-filter"></i> Filtros Rápidos</h3>
+                <div class="chips" style="justify-content: flex-start; margin-top: 1rem;">
+                    <span class="chip active" onclick="filterTasks('all')">Todas</span>
+                    <span class="chip" onclick="filterTasks('pending')">Pendientes</span>
+                    <span class="chip" onclick="filterTasks('completed')">Completadas</span>
+                    <span class="chip" onclick="filterTasks('urgent')">Urgentes</span>
+                </div>
+                <div class="sort-options" style="margin-top: 1rem;">
+                    <label>Ordenar por:</label>
+                    <select onchange="sortTasks(this.value)" style="margin-top: 0.5rem;">
+                        <option value="priority">Prioridad</option>
+                        <option value="date">Fecha</option>
+                        <option value="name">Nombre</option>
+                    </select>
+                </div>
+            </div>
+        </div>
 
+        <div class="card">
+            <h2><i class="fas fa-list-check"></i> Lista de Tareas</h2>
+            <div id="lista" class="task-list">
+                <div class="empty-state">
+                    <i class="fas fa-clipboard-list" style="font-size: 4rem; color: #ccc;"></i>
+                    <p>No hay tareas pendientes</p>
+                    <p class="text-muted">Agrega tu primera tarea usando el formulario</p>
+                </div>
+            </div>
+            
+            <div class="actions" style="margin-top: 2rem;">
+                <button class="btn-3d secondary" onclick="history.back()">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </button>
+                <button class="btn-3d" onclick="exportTasks()">
+                    <i class="fas fa-file-export"></i> Exportar Tareas
+                </button>
+            </div>
+        </div>
 
-<section class="container">
-  <button class="btn" onclick="history.back()">⬅ Volver</button>
-  <input id="tarea" placeholder="Nueva tarea">
-  <select id="nivel">
-    <option>Normal</option>
-    <option>Importante</option>
-    <option>Urgente</option>
-  </select>
-  <button class="btn" onclick="agregar()">Agregar</button>
-  <div id="lista"></div>
-</section>
+        <div class="info-grid">
+            <div class="info-card">
+                <h3><i class="fas fa-lightbulb"></i> Consejos de Productividad</h3>
+                <ul>
+                    <li>Prioriza tareas usando la matriz de Eisenhower</li>
+                    <li>Divide tareas grandes en subtareas más pequeñas</li>
+                    <li>Establece tiempos límite para cada tarea</li>
+                    <li>Revisa y actualiza tu lista diariamente</li>
+                    <li>Celebra cuando completes tareas importantes</li>
+                </ul>
+            </div>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-video"></i> Video: Método Pomodoro</h3>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/VIDEO_ID_TAREAS" 
+                            title="Método Pomodoro para Productividad"
+                            allowfullscreen>
+                    </iframe>
+                </div>
+                <p>Aprende una técnica efectiva para gestionar tu tiempo.</p>
+            </div>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-chart-line"></i> Tu Progreso</h3>
+                <div class="progress-circle" style="text-align: center; margin: 1rem 0;">
+                    <div style="font-size: 2rem; font-weight: bold; color: var(--primary-color);">0%</div>
+                    <div style="font-size: 0.9rem; color: var(--gray-color);">Tareas completadas hoy</div>
+                </div>
+                <div class="daily-goal">
+                    <label>Objetivo diario:</label>
+                    <input type="range" min="1" max="20" value="8" style="width: 100%; margin-top: 0.5rem;">
+                    <div style="text-align: center; margin-top: 0.5rem; font-size: 0.9rem;">8 tareas/día</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<footer>© 2026</footer>
-<script src="js/tareas.js"></script>
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p>© 2026 app-soporte - Sistema de Gestión de Tareas</p>
+    </footer>
+
+    <script src="js/tareas.js"></script>
+    <script>
+        function showLogin() {
+            alert('Función de login en desarrollo');
+        }
+        
+        function showSignup() {
+            alert('Función de registro en desarrollo');
+        }
+        
+        function filterTasks(filter) {
+            // Actualizar chips activos
+            document.querySelectorAll('.chip').forEach(chip => chip.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Aquí implementarías el filtrado real
+            console.log('Filtrando tareas por:', filter);
+        }
+        
+        function sortTasks(criteria) {
+            console.log('Ordenando por:', criteria);
+        }
+        
+        function exportTasks() {
+            alert('Función de exportación en desarrollo');
+        }
+        
+        // Permitir agregar tareas con Enter
+        document.addEventListener('DOMContentLoaded', function() {
+            const tareaInput = document.getElementById('tarea');
+            if (tareaInput) {
+                tareaInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        agregar();
+                    }
+                });
+            }
+        });
+        
+        // Agregar estilos adicionales
+        const style = document.createElement('style');
+        style.textContent = `
+            .task-form {
+                margin: 1rem 0;
+            }
+            
+            .form-row {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+            
+            .task-input {
+                flex: 1;
+                min-width: 200px;
+            }
+            
+            .priority-select {
+                width: 150px;
+            }
+            
+            .help-text {
+                margin-top: 0.5rem;
+                font-size: 0.9rem;
+                color: var(--gray-color);
+            }
+            
+            .task-list {
+                margin: 1rem 0;
+                max-height: 500px;
+                overflow-y: auto;
+            }
+            
+            .empty-state {
+                text-align: center;
+                padding: 3rem;
+                color: var(--gray-color);
+            }
+            
+            .text-muted {
+                color: #999;
+            }
+            
+            .btn-icon {
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: 1rem;
+                padding: 0.5rem;
+                border-radius: 4px;
+                transition: var(--transition);
+            }
+            
+            .btn-icon:hover {
+                background: #f8f9fa;
+            }
+            
+            .btn-danger {
+                color: var(--danger-color);
+            }
+            
+            .btn-danger:hover {
+                background: rgba(255, 51, 51, 0.1);
+            }
+            
+            .task-content {
+                flex: 1;
+            }
+            
+            .task-header {
+                display: flex;
+                align-items: center;
+                margin-bottom: 0.5rem;
+            }
+            
+            .task-title {
+                font-weight: 500;
+            }
+            
+            .task-meta {
+                display: flex;
+                gap: 1rem;
+                font-size: 0.85rem;
+                color: var(--gray-color);
+            }
+            
+            .task-date {
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
