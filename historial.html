@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Historial de Incidentes</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">app-soporte</div>
+
+  <nav class="menu">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="incidentes.html">Incidentes</a>
+    <a href="historial.html">Historial</a>
+    <a href="tareas.html">Tareas</a>
+    <a href="sugerencias.html">Sugerencias</a>
+  </nav>
+
+  <div class="actions-top">
+    <button class="btn-outline">Login</button>
+    <button class="btn-primary">Sign up</button>
+  </div>
+</header>
+
+
+<main class="container">
+
+<section class="incident-card">
+  <h2>Incidentes Registrados</h2>
+
+  <table class="history-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Usuario</th>
+        <th>Área</th>
+        <th>Prioridad</th>
+        <th>Estado</th>
+        <th>Apertura</th>
+        <th>Cierre</th>
+      </tr>
+    </thead>
+    <tbody id="tablaHistorial"></tbody>
+  </table>
+
+  <button class="btn-3d secondary" onclick="history.back()">Volver</button>
+</section>
+
+</main>
+
+<footer class="footer">
+  App Soporte Técnico © 2026
+</footer>
+
+<script src="js/historial.js"></script>
+</body>
+</html>

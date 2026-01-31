@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">app-soporte</div>
+
+  <nav class="menu">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="incidentes.html">Incidentes</a>
+    <a href="historial.html">Historial</a>
+    <a href="tareas.html">Tareas</a>
+    <a href="sugerencias.html">Sugerencias</a>
+  </nav>
+
+  <div class="actions-top">
+    <button class="btn-outline">Login</button>
+    <button class="btn-primary">Sign up</button>
+  </div>
+</header>
+
+
+<section class="container">
+<button class="btn" onclick="history.back()">⬅ Volver</button>
+<div class="card">Total: <span id="total"></span></div>
+<div class="card">Urgentes: <span id="urg"></span></div>
+</section>
+
+<footer>© 2026</footer>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

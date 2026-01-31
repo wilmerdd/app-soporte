@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro de Incidentes</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">app-soporte</div>
+
+  <nav class="menu">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="incidentes.html">Incidentes</a>
+    <a href="historial.html">Historial</a>
+    <a href="tareas.html">Tareas</a>
+    <a href="sugerencias.html">Sugerencias</a>
+  </nav>
+
+  <div class="actions-top">
+    <button class="btn-outline">Login</button>
+    <button class="btn-primary">Sign up</button>
+  </div>
+</header>
+
+
+<main class="container">
+
+<section class="incident-card">
+  <h2>Registro de Incidente</h2>
+
+  <table class="incident-table">
+    <tbody>
+      <tr>
+        <th>Nombre completo</th>
+        <td><input id="nombre"></td>
+        <th>Documento</th>
+        <td><input id="documento"></td>
+      </tr>
+
+      <tr>
+        <th>Contacto</th>
+        <td><input id="contacto"></td>
+        <th>Correo corporativo</th>
+        <td><input type="email" id="correo"></td>
+      </tr>
+
+      <tr>
+        <th>Área del usuario</th>
+        <td><input id="area"></td>
+        <th>Fecha del incidente</th>
+        <td><input type="date" id="fechaIncidente"></td>
+      </tr>
+
+      <tr>
+        <th>Fecha de apertura</th>
+        <td><input type="date" id="fechaApertura"></td>
+        <th>Fecha de cierre</th>
+        <td><input type="date" id="fechaCierre"></td>
+      </tr>
+
+      <tr>
+        <th>Tipo</th>
+        <td><input id="tipo"></td>
+        <th>Prioridad</th>
+        <td>
+          <select id="prioridad">
+            <option>Normal</option>
+            <option>Importante</option>
+            <option>Urgente</option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Estado</th>
+        <td>
+          <select id="estado">
+            <option>Abierto</option>
+            <option>En proceso</option>
+            <option>Cerrado</option>
+          </select>
+        </td>
+        <th>Técnico asignado</th>
+        <td><input id="tecnico"></td>
+      </tr>
+
+      <tr>
+        <th colspan="4">Descripción del incidente</th>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <textarea id="descripcion"></textarea>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="actions">
+    <button class="btn-3d" onclick="guardarIncidente()">Registrar</button>
+    <button class="btn-3d secondary" onclick="history.back()">Volver</button>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  App Soporte Técnico © 2026
+</footer>
+
+<script src="js/incidentes.js"></script>
+</body>
+</html>

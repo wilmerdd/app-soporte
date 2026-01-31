@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Tareas</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">app-soporte</div>
+
+  <nav class="menu">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="incidentes.html">Incidentes</a>
+    <a href="historial.html">Historial</a>
+    <a href="tareas.html">Tareas</a>
+    <a href="sugerencias.html">Sugerencias</a>
+  </nav>
+
+  <div class="actions-top">
+    <button class="btn-outline">Login</button>
+    <button class="btn-primary">Sign up</button>
+  </div>
+</header>
+
+
+<section class="container">
+  <button class="btn" onclick="history.back()">⬅ Volver</button>
+  <input id="tarea" placeholder="Nueva tarea">
+  <select id="nivel">
+    <option>Normal</option>
+    <option>Importante</option>
+    <option>Urgente</option>
+  </select>
+  <button class="btn" onclick="agregar()">Agregar</button>
+  <div id="lista"></div>
+</section>
+
+<footer>© 2026</footer>
+<script src="js/tareas.js"></script>
+</body>
+</html>
